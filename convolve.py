@@ -57,5 +57,5 @@ def bandpass(sensor, band):
     else:
         sys.exit("Hatali Platform Secimi!")
 
-
-bandpass(sensor, band)
+if __name__ == '__main__':
+    bandpass(sensor, band)
