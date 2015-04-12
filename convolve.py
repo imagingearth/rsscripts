@@ -10,9 +10,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-band = 1, 2, 3, 4, 5, 6
-sensor = "TM5"
-spectra = "0095uuu"
 bwlen = []
 
 
@@ -35,9 +32,7 @@ def bandpass(sensor, band):
             y = refl[indis]  
             refson = np.interp(wlenr, x, y)  
             pay = np.multiply(resp, refson)
-            pay = np.sum(pay)
-            payda = np.sum(resp)
-            deger = pay / payda
+            deger = np.sum(pay) / np.sum(resp)
             bwlen.append(deger)
         print "Degerler: \n %r" % bwlen
         if platforms[sensor] == 3:
@@ -48,7 +43,8 @@ def bandpass(sensor, band):
             print "Bant Orta Degerleri: \n %r" % (bandorta[platforms[sensor] - 3])
         elif platforms[sensor] == 2 or platforms[sensor] == 1:
             plt.title("Spektral Konvolusyon " + spectra + sensor)
-            plt.xlim(min(bandorta[platforms[sensor] - 2] - 0.01), max(bandorta[platforms[sensor] - 2] + 0.01))
+            plt.xlim(min(bandorta[platforms[sensor] - 2] - 0.01), 
+                     max(bandorta[platforms[sensor] - 2] + 0.01))
             plt.plot(bandorta[platforms[sensor] - 2], bwlen)
             print "Bant Orta Degerleri: %r" % (bandorta[platforms[sensor] - 2])
         plt.ylabel("Yansitim")
@@ -58,4 +54,7 @@ def bandpass(sensor, band):
         sys.exit("Hatali Platform Secimi!")
 
 if __name__ == '__main__':
+    band = 1, 2, 3, 4, 5, 6
+    sensor = "TM5"
+    spectra = "0095uuu"
     bandpass(sensor, band)
